@@ -1,11 +1,15 @@
 <template>
   <v-card
     class="mx-auto"
+    color="blue"
+    min-width="300"
+    min-height="115"
     :class="{
       locked: isLocked,
       dropzone: isDragging,
       selected: isSelected,
-      highlighted: isHighlighted
+      highlighted: isHighlighted,
+      isBot:isBot
     }"
     raised
     v-on="$listeners"
@@ -22,6 +26,7 @@
         <v-list-item-title class="font-weight-medium">
           {{ name || email }}
           <v-icon v-if="isLocked" small right class="mb-1">mdi-lock</v-icon>
+          <v-icon v-if="isBot" small right class="mb-1">mdi-robot</v-icon>
         </v-list-item-title>
         <v-list-item-subtitle v-if="enrollments && enrollments.length > 0">
           {{ enrollments[0].organization.name }}
@@ -64,6 +69,7 @@
           </v-icon>
         </v-btn>
       </v-list-item-icon>
+      
     </v-list-item>
     <slot />
   </v-card>
@@ -120,6 +126,10 @@ export default {
     isLocked: {
       type: Boolean,
       required: true
+    },
+    isBot: {
+      type: Boolean,
+      required: true,
     }
   },
   data() {
